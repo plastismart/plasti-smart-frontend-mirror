@@ -1,5 +1,5 @@
 node_modules/**/*
-.expo/*
+.expo/
 npm-debug.*
 *.jks
 *.p8
@@ -17,3 +17,9 @@ web-build/
 
 aps_development.cer
 .env
+
+dist/
+.env.example
+DEVELOPER_GUIDE.md
+LAUNCH_GUIDE.md
+patches/

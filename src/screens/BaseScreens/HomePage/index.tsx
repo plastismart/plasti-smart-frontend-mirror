@@ -23,11 +23,10 @@ import Calendar from 'components/Calendar';
 import Colors from 'utils/Colors';
 import DailyTasks from 'components/DailyTasks';
 
-import {
-  TourGuideZone, // Main wrapper of highlight component
-  TourGuideZoneByPosition, // Component to use mask on overlay (ie, position absolute)
-  useTourGuideController, // hook to start, etc.
-} from 'rn-tourguide';
+// rn-tourguide is not compatible with New Architecture — stubbed out
+const TourGuideZone = ({ children }: { children: React.ReactNode; [key: string]: unknown }) => <>{children}</>;
+const TourGuideZoneByPosition = (_props: unknown) => null;
+const useTourGuideController = () => ({ canStart: false, start: () => {}, stop: () => {}, eventEmitter: null });
 
 import { feedAvatar } from '../../../redux/slices/usersSlice'; // import the action
 import { Dimensions } from 'react-native';
@@ -232,7 +231,6 @@ const HomePage = ({ navigation }: HomePageProps) => {
         position: 'absolute',
         top: screenHeight * 0.45,
       }}>
-        <Image source={require('../../../assets/Ellipse 66.svg')}></Image>
         <CircleBG width={screenWidth * 6} height={screenHeight * 1.1}></CircleBG>
       </View>
 

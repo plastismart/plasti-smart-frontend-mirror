@@ -6,11 +6,9 @@ import RootNavigation from './src/navigation';
 import { useFonts, Raleway_400Regular, Raleway_600SemiBold, Raleway_800ExtraBold } from '@expo-google-fonts/raleway';
 import { Inter_400Regular, Inter_700Bold, Inter_500Medium, Inter_600SemiBold } from '@expo-google-fonts/inter';
 import { LogBox } from 'react-native';
-import {
-  TourGuideProvider,
-} from 'rn-tourguide';
+// rn-tourguide is not compatible with New Architecture (Expo Go v53+)
+// TourGuideProvider is stubbed out until the library is updated
 
-import { dispatch } from 'd3';
 LogBox.ignoreAllLogs(true);
 
 export default function App() {
@@ -28,16 +26,12 @@ export default function App() {
   if (!fontsLoaded) {
     return <View />;
   }
-  
+
 
   return (
-    
     <Provider store={store}>
       <StatusBar barStyle = 'dark-content' />
-      <TourGuideProvider preventOutsideInteraction  {...{ borderRadius: 16 }}>
-        <RootNavigation />
-      </TourGuideProvider>
+      <RootNavigation />
     </Provider>
-    
   );
 }

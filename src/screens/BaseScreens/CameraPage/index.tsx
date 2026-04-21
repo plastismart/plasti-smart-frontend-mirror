@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable max-len */
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Camera, CameraType } from 'expo-camera';
+import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
 import { useFocusEffect } from '@react-navigation/native';
 import {
   View,
@@ -55,15 +55,16 @@ type CameraPageProps = {
 };
 
 const CameraPage = ({ navigation }: CameraPageProps) => {
-  const [type, setType] = useState<CameraType>(CameraType.back);
-  const [permissions, requestPermission] = Camera.useCameraPermissions();
+  const [facing, setFacing] = useState<CameraType>('back');
+  const [permission, requestPermission] = useCameraPermissions();
   const [animationLineHeight, setAnimationLineHeight] = useState<number>(0);
   const [focusLineAnimation, setFocusLineAnimation] = useState<Animated.Value>(
     new Animated.Value(0),
   );
 
   const [capturedPhoto, setCapturedPhoto] = useState<string | undefined>(undefined);
-  const cameraRef = useRef<Camera | null>(null);
+  const cameraRef = useRef<CameraView | null>(null);
+  const [isCameraReady, setIsCameraReady] = useState<boolean>(false);
   const [modelRunning, setModelRunning] = useState<boolean>(false);
   const [modelVerdict, setModelVerdict] = useState<number>(0);
   const [predictionID, setPredictionID] = useState<string>('');
@@ -83,7 +84,7 @@ const CameraPage = ({ navigation }: CameraPageProps) => {
   
   useEffect(() => {
     (async () => {
-      if (!permissions) await requestPermission();
+      if (!permission) await requestPermission();
     })();
   }, []);
 
@@ -92,6 +93,7 @@ const CameraPage = ({ navigation }: CameraPageProps) => {
       setIsAnimating(true);
       setCapturedPhoto(undefined);
       setZoom(0);
+      setIsCameraReady(false);
       dispatch(cameraOpened());
   
       let animation: Animated.CompositeAnimation | undefined;
@@ -119,7 +121,7 @@ const CameraPage = ({ navigation }: CameraPageProps) => {
   );
 
   function toggleCameraType() {
-    setType(currentType => (currentType === CameraType.back ? CameraType.front : CameraType.back));
+    setFacing(current => (current === 'back' ? 'front' : 'back'));
   }
 
   const pollStatus = useCallback(async (url: string) => {
@@ -154,10 +156,9 @@ const CameraPage = ({ navigation }: CameraPageProps) => {
   }, [modelRunning, predictionID, bottomSheetRef]);
 
   const takePicture = async () => {
-    if (cameraRef.current) {
+    if (cameraRef.current && isCameraReady) {
       try {
-        const options = { base64: true };
-        const photo = await cameraRef.current.takePictureAsync(options);
+        const photo = await cameraRef.current.takePictureAsync({ skipMetadata: true });
 
         if (photo.uri) {
 
@@ -177,7 +178,7 @@ const CameraPage = ({ navigation }: CameraPageProps) => {
             [{ crop: cropRect }],
             { base64: true }
           );
-          console.log(croppedPhoto.base64);
+          const base64Image = `data:image/jpeg;base64,${croppedPhoto.base64}`;
           setCapturedPhoto(croppedPhoto.base64);
 
           // API call
@@ -190,7 +191,7 @@ const CameraPage = ({ navigation }: CameraPageProps) => {
             body: JSON.stringify({
               version: `${REPLICATE_VERSION}`,
               input: {
-                image: croppedPhoto.base64,
+                image: base64Image,
               },
             }),
           });
@@ -281,7 +282,7 @@ const CameraPage = ({ navigation }: CameraPageProps) => {
   };
   /**************** Done Nav functions ****************/
 
-  if (!permissions) {
+  if (!permission) {
     return (
       <View style={FormatStyle.container}>
         <Text>Requesting permissions...</Text>
@@ -289,7 +290,7 @@ const CameraPage = ({ navigation }: CameraPageProps) => {
     );
   }
 
-  if (!permissions.granted) {
+  if (!permission.granted) {
     return (
       <View style={FormatStyle.container}>
         <Text>No access to camera</Text>
@@ -303,8 +304,7 @@ const CameraPage = ({ navigation }: CameraPageProps) => {
       <PinchGestureHandler
         onGestureEvent={onPinchGestureEvent}
       >
-        <Camera style={styles.camera} type={type} ref={cameraRef} flashMode={Camera.Constants.FlashMode.auto} 
-          autoFocus={Camera.Constants.AutoFocus.on} zoom={zoom}>
+        <CameraView style={styles.camera} facing={facing} ref={cameraRef} flash="auto" zoom={zoom} onCameraReady={() => setIsCameraReady(true)}>
           <View style={styles.overlay}>
             <View style={styles.topContainer}>
               <View style={styles.backButtonContainer}>
@@ -377,7 +377,7 @@ const CameraPage = ({ navigation }: CameraPageProps) => {
               </View>
             </View>
           </View>
-        </Camera>
+        </CameraView>
       </PinchGestureHandler>
       <RBSheet
         ref={bottomSheetRef}

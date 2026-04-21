@@ -4,16 +4,18 @@ import { AntDesign } from '@expo/vector-icons';
 import Colors from 'utils/Colors';
 import TextStyles from 'utils/TextStyles';
 
-interface MultiSelectProps {
+interface AppButtonProps {
   onPress: (event: GestureResponderEvent) => void
-  children : React.ReactNode
-  active: number[]
+  title: string
+  fullWidth?: boolean
+  isArrow?: boolean
+  backgroundColor?: string
+  textColor?: string
+  style?: StyleProp<ViewStyle>
+  inverted?: boolean
+  disabled?: boolean
+  textStyle?: StyleProp<TextStyle>
 }
-
-const Multiselect = ({children, active} : MultiSelectProps) => (
-    
-))
-
 
 const Button = ({
   onPress,

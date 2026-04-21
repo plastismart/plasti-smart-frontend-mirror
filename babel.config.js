@@ -21,7 +21,7 @@ module.exports = function (api) {
             '^~(.+)': './src/\\1',
           },
         }],
-      'react-native-reanimated/plugin',
+      'react-native-worklets/plugin',
 
     ],
   };

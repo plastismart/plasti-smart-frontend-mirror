@@ -22,7 +22,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.dali.plastic-sorting"
+      "bundleIdentifier": "com.dali.plastic-sorting",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
