@@ -1,0 +1,120 @@
+diff --git a/node_modules/react-native-snap-carousel/src/carousel/Carousel.js b/node_modules/react-native-snap-carousel/src/carousel/Carousel.js
+index dae71a3..4275865 100644
+--- a/node_modules/react-native-snap-carousel/src/carousel/Carousel.js
++++ b/node_modules/react-native-snap-carousel/src/carousel/Carousel.js
+@@ -1,5 +1,6 @@
+ import React, { Component } from 'react';
+-import { Animated, Easing, FlatList, I18nManager, Platform, ScrollView, View, ViewPropTypes } from 'react-native';
++import { Animated, Easing, FlatList, I18nManager, Platform, ScrollView, View } from 'react-native';
++const ViewPropTypes = null;
+ import PropTypes from 'prop-types';
+ import shallowCompare from 'react-addons-shallow-compare';
+ import {
+@@ -43,8 +44,8 @@ export default class Carousel extends Component {
+         autoplayDelay: PropTypes.number,
+         autoplayInterval: PropTypes.number,
+         callbackOffsetMargin: PropTypes.number,
+-        containerCustomStyle: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
+-        contentContainerCustomStyle: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
++        containerCustomStyle: () => null,
++        contentContainerCustomStyle: () => null,
+         enableMomentum: PropTypes.bool,
+         enableSnap: PropTypes.bool,
+         firstItem: PropTypes.number,
+@@ -61,7 +62,7 @@ export default class Carousel extends Component {
+         scrollEnabled: PropTypes.bool,
+         scrollInterpolator: PropTypes.func,
+         slideInterpolatedStyle: PropTypes.func,
+-        slideStyle: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
++        slideStyle: () => null,
+         shouldOptimizeUpdates: PropTypes.bool,
+         swipeThreshold: PropTypes.number,
+         useScrollView: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+diff --git a/node_modules/react-native-snap-carousel/src/pagination/Pagination.js b/node_modules/react-native-snap-carousel/src/pagination/Pagination.js
+index 5c021cf..d56008a 100644
+--- a/node_modules/react-native-snap-carousel/src/pagination/Pagination.js
++++ b/node_modules/react-native-snap-carousel/src/pagination/Pagination.js
+@@ -1,5 +1,5 @@
+ import React, { PureComponent } from 'react';
+-import { I18nManager, Platform, View, ViewPropTypes } from 'react-native';
++import { I18nManager, Platform, View } from 'react-native';
+ import PropTypes from 'prop-types';
+ import PaginationDot from './PaginationDot';
+ import styles from './Pagination.style';
+@@ -14,16 +14,16 @@ export default class Pagination extends PureComponent {
+         dotsLength: PropTypes.number.isRequired,
+         activeOpacity: PropTypes.number,
+         carouselRef: PropTypes.object,
+-        containerStyle: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
++        containerStyle: () => null,
+         dotColor: PropTypes.string,
+-        dotContainerStyle: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
++        dotContainerStyle: () => null,
+         dotElement: PropTypes.element,
+-        dotStyle: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
++        dotStyle: () => null,
+         inactiveDotColor: PropTypes.string,
+         inactiveDotElement: PropTypes.element,
+         inactiveDotOpacity: PropTypes.number,
+         inactiveDotScale: PropTypes.number,
+-        inactiveDotStyle: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
++        inactiveDotStyle: () => null,
+         renderDots: PropTypes.func,
+         tappableDots: PropTypes.bool,
+         vertical: PropTypes.bool,
+diff --git a/node_modules/react-native-snap-carousel/src/pagination/PaginationDot.js b/node_modules/react-native-snap-carousel/src/pagination/PaginationDot.js
+index e59d196..deb86f3 100644
+--- a/node_modules/react-native-snap-carousel/src/pagination/PaginationDot.js
++++ b/node_modules/react-native-snap-carousel/src/pagination/PaginationDot.js
+@@ -1,5 +1,5 @@
+ import React, { PureComponent } from 'react';
+-import { View, Animated, Easing, TouchableOpacity, ViewPropTypes } from 'react-native';
++import { View, Animated, Easing, TouchableOpacity } from 'react-native';
+ import PropTypes from 'prop-types';
+ import styles from './Pagination.style';
+ 
+@@ -12,11 +12,11 @@ export default class PaginationDot extends PureComponent {
+         activeOpacity: PropTypes.number,
+         carouselRef: PropTypes.object,
+         color: PropTypes.string,
+-        containerStyle: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
++        containerStyle: () => null,
+         inactiveColor: PropTypes.string,
+-        inactiveStyle: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
++        inactiveStyle: () => null,
+         index: PropTypes.number,
+-        style: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
++        style: () => null,
+         tappable: PropTypes.bool
+     };
+ 
+diff --git a/node_modules/react-native-snap-carousel/src/parallaximage/ParallaxImage.js b/node_modules/react-native-snap-carousel/src/parallaximage/ParallaxImage.js
+index 8bc774a..1968730 100644
+--- a/node_modules/react-native-snap-carousel/src/parallaximage/ParallaxImage.js
++++ b/node_modules/react-native-snap-carousel/src/parallaximage/ParallaxImage.js
+@@ -1,14 +1,14 @@
+ // Parallax effect inspired by https://github.com/oblador/react-native-parallax/
+ 
+ import React, { Component } from 'react';
+-import { View, ViewPropTypes, Image, Animated, Easing, ActivityIndicator, findNodeHandle } from 'react-native';
++import { View, Image, Animated, Easing, ActivityIndicator, findNodeHandle } from 'react-native';
+ import PropTypes from 'prop-types';
+ import styles from './ParallaxImage.style';
+ 
+ export default class ParallaxImage extends Component {
+ 
+     static propTypes = {
+-        ...Image.propTypes,
++        
+         carouselRef: PropTypes.object, // passed from <Carousel />
+         itemHeight: PropTypes.number, // passed from <Carousel />
+         itemWidth: PropTypes.number, // passed from <Carousel />
+@@ -16,7 +16,7 @@ export default class ParallaxImage extends Component {
+         sliderHeight: PropTypes.number, // passed from <Carousel />
+         sliderWidth: PropTypes.number, // passed from <Carousel />
+         vertical: PropTypes.bool, // passed from <Carousel />
+-        containerStyle: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
++        containerStyle: () => null,
+         dimensions: PropTypes.shape({
+             width: PropTypes.number,
+             height: PropTypes.number

@@ -22,4 +22,4 @@ dist/
 .env.example
 DEVELOPER_GUIDE.md
 LAUNCH_GUIDE.md
-patches/
+# patches/ intentionally NOT ignored — patch-package files must be committed so postinstall applies them
