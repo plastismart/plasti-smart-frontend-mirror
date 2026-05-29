@@ -78,7 +78,6 @@ const CameraPage = ({ navigation }: CameraPageProps) => {
     useCallback(() => {
       setCapturedPhoto(undefined);
       setZoom(0);
-      setIsCameraReady(false);
       dispatch(cameraOpened());
     }, [navigation]),
   );
