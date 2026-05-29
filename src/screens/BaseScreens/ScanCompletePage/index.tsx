@@ -3,7 +3,6 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Image,
   Dimensions
 } from 'react-native';
 
@@ -51,7 +50,6 @@ const ScanCompletePage = ({ navigation }: ScanCompletePageProps) => {
         top: '4%',
 
       }}>
-        <Image source={require('../../../assets/confetti.svg')}></Image>
         <Confetti />
       </View>
 
@@ -65,7 +63,6 @@ const ScanCompletePage = ({ navigation }: ScanCompletePageProps) => {
         bottom: '-10%',
 
       }}>
-        <Image source={require('../../../assets/Ellipse 66.svg')}></Image>
         <CircleBG></CircleBG>
       </View>
 

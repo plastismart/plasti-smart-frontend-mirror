@@ -55,11 +55,6 @@ const CameraOptionsModal: React.FC<CameraOptionsModalProps> = ({ isVisible, onCl
                   <Text style={[TextStyles.regular, { textAlign: 'center', color: '#FFFFFF', fontSize:16 }]}>Manually enter</Text>
                 </TouchableOpacity>
               </View>
-              <View style={styles.buttonBlock1}>
-                <TouchableOpacity onPress={() => handleOptionSelect(BaseTabRoutes.UNKNOWN_PLASTIC)}>
-                  <Text style={[TextStyles.regular, { textAlign: 'center', color: '#FFFFFF', fontSize:16 }]}>No label</Text>
-                </TouchableOpacity>
-              </View>
             </View>
           </View>
         </Animated.View>

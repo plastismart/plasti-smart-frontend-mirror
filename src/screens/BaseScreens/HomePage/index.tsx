@@ -351,11 +351,11 @@ const HappyScale = ({ happiness }: HappyProps) => {
   return (
     <View>
       <View style={{ width: screenWidth * 0.38, height: screenHeight * 0.03, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 2 }}>
-        {Array(Math.min(5, happiness)).fill(1).map(() => (
-          <Heart width={28} height={28}></Heart>
+        {Array(Math.min(5, happiness)).fill(1).map((_, i) => (
+          <Heart key={i} width={28} height={28}></Heart>
         ))}
-        {Array(empty).fill(1).map(() => (
-          <EmptyHeart width={28} height={28}></EmptyHeart>
+        {Array(empty).fill(1).map((_, i) => (
+          <EmptyHeart key={i} width={28} height={28}></EmptyHeart>
         ))}
       </View>
     </View>

@@ -52,9 +52,9 @@ const EmptyComponent = () => null;
 
 export const HomeNavigator = () => {
   return (
-    <BaseStack.Navigator initialRouteName={BaseTabRoutes.HOME}>
+    <BaseStack.Navigator initialRouteName={BaseTabRoutes.HOME_SCREEN}>
       <BaseStack.Screen
-        name={BaseTabRoutes.HOME}
+        name={BaseTabRoutes.HOME_SCREEN}
         component={HomePage}
         options={{ header: () => null }}
       />

@@ -22,6 +22,7 @@ export enum BaseTabRoutes {
   CAMERA = 'Camera',
   SCAN_COMPLETE = 'ScanComplete',
   HOME = 'Home',
+  HOME_SCREEN = 'HomeScreen',
   AVATAR_CUSTOMIZATION = 'AvatarCustomization',
   LEADERBOARD = 'Leaderboard',
   EDUCATION = 'Education',
@@ -43,6 +44,7 @@ export type BaseNavigationList = {
   [BaseTabRoutes.CAMERA]: Record<string, unknown>;
   [BaseTabRoutes.SCAN_COMPLETE]: Record<string, unknown>;
   [BaseTabRoutes.HOME]: Record<string, unknown>;
+  [BaseTabRoutes.HOME_SCREEN]: Record<string, unknown>;
   [BaseTabRoutes.AVATAR_CUSTOMIZATION]: Record<string, unknown>;
   [BaseTabRoutes.LEADERBOARD]: Record<string, unknown>;
   [BaseTabRoutes.EDUCATION]: Record<string, unknown>;
